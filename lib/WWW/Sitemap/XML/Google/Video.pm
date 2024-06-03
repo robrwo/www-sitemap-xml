@@ -4,7 +4,7 @@ use warnings;
 package WWW::Sitemap::XML::Google::Video;
 
 use Moose;
-use WWW::Sitemap::XML::Types qw( Location VideoPlayer Max100CharsStr Max2048CharsStr );
+use WWW::Sitemap::XML::Types qw( Location VideoPlayer NonEmptyStr Max2048CharsStr );
 use XML::LibXML;
 
 =head1 SYNOPSIS
@@ -94,7 +94,7 @@ has 'player' => (
 
 The title of the video.
 
-isa: L<WWW::Sitemap::XML::Types/"Max100CharsStr">
+isa: L<WWW::Sitemap::XML::Types/"NonEmptyStr">
 
 Required.
 
@@ -102,7 +102,7 @@ Required.
 
 has 'title' => (
     is => 'rw',
-    isa => Max100CharsStr,
+    isa => NonEmptyStr,
     required => 1,
     predicate => 'has_title',
 );
@@ -195,4 +195,3 @@ L<https://support.google.com/webmasters/answer/183668>
 __PACKAGE__->meta->make_immutable;
 
 1;
-

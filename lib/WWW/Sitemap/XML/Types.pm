@@ -18,7 +18,7 @@ use MooseX::Types -declare => [qw(
     ImageObject
     ArrayRefOfImageObjects
     StrBool
-    Max100CharsStr
+    NonEmptyStr
     Max2048CharsStr
 )];
 
@@ -55,12 +55,12 @@ coerce LowercaseStr,
     from Str,
     via { lc($_) };
 
-subtype Max100CharsStr,
+subtype NonEmptyStr,
     as Str,
     where {
-        length($_) <= 100
+        length($_) > 0
     },
-    message { "Maximum of 100 characters allowed" };
+    message { "Must be non-empty" };
 
 subtype Max2048CharsStr,
     as Str,
@@ -241,14 +241,14 @@ Subtype of C<Str>, with only lowercase characters.
 
 Coerces from C<Str> using C<lc>.
 
-=type Max100CharsStr
+=type NonEmptyStr
 
     has 'short_str' => (
         is => 'rw',
-        isa => Max100CharsStr,
+        isa => NonEmptyStr,
     );
 
-Subtype of C<Str>, up to 100 characters.
+Subtype of C<Str>, cannot be an empty string.
 
 =type Max2048CharsStr
 
@@ -339,4 +339,3 @@ object, where the string is used as L<WWW::Sitemap::XML::Google::Video::Player/"
 no Moose::Util::TypeConstraints;
 
 1;
-
